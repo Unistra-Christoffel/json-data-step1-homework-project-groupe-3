@@ -12,7 +12,6 @@
 
     -id de la tâche (integer, unique)
     -libellé de la tâche (string)
-    -statut de la tâche (string: "à faire", "en cours", "bloqué" "terminée", "supprimée")
     -date de création (string, format ISO 8601)
     -date de modification (string, format ISO 8601)
     -date de complétion (string, format ISO 8601, nullable)
@@ -45,7 +44,6 @@
 {
   "id": 1,
   "libellé": "Exemple de tâche",
-  "statut": "à faire",
   "date_de_création": "2023-10-01T10:00:00Z",
   "date_de_modification": "2023-10-01T10:00:00Z",
   "date_de_complétion": null,
@@ -65,7 +63,6 @@
   {
     "id": 1,
     "libellé": "Exemple de tâche 1",
-    "statut": "à faire",
     "date_de_création": "2023-10-01T10:00:00Z",
     "date_de_modification": "2023-10-01T10:00:00Z",
     "date_de_complétion": null,
@@ -79,7 +76,6 @@
   {
     "id": 2,
     "libellé": "Exemple de tâche 2",
-    "statut": "en cours",
     "date_de_création": "2023-10-02T11:00:00Z",
     "date_de_modification": "2023-10-03T12:00:00Z",
     "date_de_complétion": null,
