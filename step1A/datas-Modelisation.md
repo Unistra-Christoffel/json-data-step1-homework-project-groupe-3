@@ -8,21 +8,28 @@
   
 - ### Structure JSON
 
-- #### Chaque tâche est un objet avec les paires propriétés/valeurs suivantes
+- #### Chaque tâche est un objet avec les paires propriétés/valeurs suivantes:
 
-    -id de la tâche (integer, unique)
-    -libellé de la tâche (string)
-    -date de création (string, format ISO 8601)
-    -date de modification (string, format ISO 8601)
-    -date de complétion (string, format ISO 8601, nullable)
-    compteur de temps passé (integer, en minutes)
-    -description (string, nullable)
-    -assignation (string, nullable)
-    -documentation (array de strings, nullable)
-    -fichiers joints (array de strings, nullable)
-    -to do list associée (array de strings, nullable)
+  -  id de la tâche (integer, unique)
+  -  libellé de la tâche (string)
+  -  date de création (string, format ISO 8601)
+  -  date de modification (string, format ISO 8601)
+  -  date de complétion (string, format ISO 8601, nullable)
+  -  compteur de temps passé (integer, en minutes)
+  -  description (string, nullable)
+  -  assignation (string, nullable)
+  -  documentation (array de strings, nullable)
+  -  fichiers joints (array de strings, nullable)
+  -  to do list associée (Type de la valeur : Array ([])
+  
+    - ##### Contenu de l'Array : Un Objet unique
+   
+       - ###### Propriétés de l'Objet :
+  
+          - "ToDoA" : Array d'Objets (chaque objet a les propriétés idToDoA, subTask, commentaire).  
+          - "ToDoB" : Array d'Objets (chaque objet a les propriétés idToDoB, subTask, commentaire).)
 
-- ##### Justification des choix
+- #### Justification des choix
 
   - Utilisation de types simples pour faciliter la manipulation des données en JavaScript.
   - Inclusion de dates pour le suivi de l'historique des tâches.
@@ -52,7 +59,24 @@
   "assignation": "Utilisateur A",
   "documentation": ["http://lien-vers-doc1.com", "http://lien-vers-doc2.com"],
   "fichiers_joints": ["fichier1.pdf", "image2.png"],
-  "to_do_list_associée": ["Sous-tâche 1", "Sous-tâche 2"]
+  "to_do_list_associee": [
+      {
+        "ToDoA": [
+          {
+            "idToDoA"    : "uniqueId",
+            "subTask"    : "Sous tâche",
+            "commentaire": "description etc..."
+          }
+        ],
+        "ToDoB": [
+          {
+            "idToDoB"    : "uniqueId",
+            "subTask"    : "Sous tâche",
+            "commentaire": "description etc..."
+          }
+        ]
+      }
+    ] 
 }
 ```
 
@@ -62,29 +86,65 @@
 [
   {
     "id": 1,
-    "libellé": "Exemple de tâche 1",
-    "date_de_création": "2023-10-01T10:00:00Z",
+    "libelle": "TP Histoire de l'art: Période Baroque",
+    "date_de_creation": "2023-10-01T10:00:00Z",
     "date_de_modification": "2023-10-01T10:00:00Z",
-    "date_de_complétion": null,
-    "compteur_de_temps_passé": 0,
-    "description": "Description détaillée de la tâche 1.",
-    "assignation": "Utilisateur A",
+    "date_de_completion": null,
+    "compteur_de_temps_passe(mn)": 120,
+    "description": "Préparer un résumé des précurseurs du Baroque en France et en Europe.",
+    "assignation": "Justine",
     "documentation": ["http://lien-vers-doc1.com"],
     "fichiers_joints": ["fichier1.pdf"],
-    "to_do_list_associée": ["Sous-tâche 1", "Sous-tâche 2"]
+    "to_do_list_associee": [
+      {
+        "ToDoA": [
+          {
+            "idToDoA"    : "A1",
+            "subTask"    : "France",
+            "commentaire": "Période d'ouverture"
+          }
+        ],
+        "ToDoB": [
+          {
+            "idToDoB"    : "B1",
+            "subTask"    : "France",
+            "commentaire": "Période d'ouverture"
+          }
+        ]
+      }
+    ]
   },
   {
     "id": 2,
-    "libellé": "Exemple de tâche 2",
-    "date_de_création": "2023-10-02T11:00:00Z",
-    "date_de_modification": "2023-10-03T12:00:00Z",
-    "date_de_complétion": null,
-    "compteur_de_temps_passé": 30,
-    "description": "Description détaillée de la tâche 2.",
-    "assignation": "Utilisateur B",
+    "libelle": "Colorimétrie",
+    "date_de_creation": "2023-10-01T10:00:00Z",
+    "date_de_modification": "2023-10-01T10:00:00Z",
+    "date_de_completion": null,
+    "compteur_de_temps_passe(mn)": 120,
+    "description": "Comprendre les codes héxadécimaux et leur nomenclature.",
+    "assignation": "Justine",
     "documentation": ["http://lien-vers-doc2.com"],
-    "fichiers_joints": ["image2.png"],
-    "to_do_list_associée": ["Sous-tâche A", "Sous-tâche B"]
+    "fichiers_joints": ["fichier2.pdf"],
+    "to_do_list_associee": [
+      {
+        "ToDoA": [
+          {
+            "idToDoA"    : "A1",
+            "subTask"    : "Comparaison",
+            "commentaire": "RGB et Hexadécimal"
+          }
+        ],
+        "ToDoB": [
+          {
+            "idToDoB"    : "B1",
+            "subTask"    : "Comparaison",
+            "commentaire": "HSL et Héxadécimal"
+          }
+        ]
+      }
+    ]
   }
 ]
+
+
 ```
