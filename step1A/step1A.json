@@ -60,5 +60,3 @@
     ]
   }
 ]
-[{"id":1,"libelle":"TP Histoire de l'art: Période Baroque","date_de_creation":"2023-10-01T10:00:00Z","date_de_modification":"2023-10-01T10:00:00Z","date_de_completion":null,"compteur_de_temps_passe(mn)":120,"description":"Préparer un résumé des précurseurs du Baroque en France et en Europe.","assignation":"Justine","documentation":["http://lien-vers-doc1.com"],"fichiers_joints":["fichier1.pdf"],"to_do_list_associee":[{"ToDoA":[{"idToDoA":"A1","subTask":"France","commentaire":"Période d'ouverture"}],"ToDoB":[{"idToDoB":"B1","subTask":"France","commentaire":"Période d'ouverture"}]}]},
-{"id":2,"libelle":"Colorimétrie","date_de_creation":"2023-10-01T10:00:00Z","date_de_modification":"2023-10-01T10:00:00Z","date_de_completion":null,"compteur_de_temps_passe(mn)":120,"description":"Comprendre les codes héxadécimaux et leur nomenclature.","assignation":"Justine","documentation":["http://lien-vers-doc2.com"],"fichiers_joints":["fichier2.pdf"],"to_do_list_associee":[{"ToDoA":[{"idToDoA":"A1","subTask":"Comparaison","commentaire":"RGB et Hexadécimal"}],"ToDoB":[{"idToDoB":"B1","subTask":"Comparaison","commentaire":"HSL et Héxadécimal"}]}]}]
