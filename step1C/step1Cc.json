@@ -1,1 +1,78 @@
-
+{
+  "skillsLevel": [
+    {
+      "idSkillsLevel": "1",
+      "level": "débutant",
+      "description": "Découverte des concepts de base",
+      "experienceRequired": "0-6 mois"
+    },
+    {
+      "idSkillsLevel": "2", 
+      "level": "initié",
+      "description": "Compréhension des fondamentaux",
+      "experienceRequired": "6 mois - 1 an"
+    },
+    {
+      "idSkillsLevel": "3",
+      "level": "intermédiaire",
+      "description": "Application pratique autonome",
+      "experienceRequired": "1-2 ans"
+    },
+    {
+      "idSkillsLevel": "4",
+      "level": "confirmé",
+      "description": "Maîtrise des techniques avancées",
+      "experienceRequired": "2-3 ans"
+    },
+    {
+      "idSkillsLevel": "5",
+      "level": "avancé",
+      "description": "Expertise technique approfondie",
+      "experienceRequired": "3-5 ans"
+    },
+    {
+      "idSkillsLevel": "6",
+      "level": "expert",
+      "description": "Maîtrise complète et innovation",
+      "experienceRequired": "5+ ans"
+    },
+    {
+      "idSkillsLevel": "7",
+      "level": "expert confirmé",
+      "description": "Leadership technique et mentorat",
+      "experienceRequired": "7+ ans"
+    },
+    {
+      "idSkillsLevel": "8",
+      "level": "maître",
+      "description": "Référence dans le domaine",
+      "experienceRequired": "10+ ans"
+    }
+  ],
+  "difficultyRating": [
+    {
+      "idDifficultyRating": "1",
+      "estimatedDifficulty": "facile",
+      "note": "Niveau débutant - concepts de base",
+      "skillsLevelIds": ["1", "2"]
+    },
+    {
+      "idDifficultyRating": "2",
+      "estimatedDifficulty": "moyen",
+      "note": "Niveau intermédiaire - pratique régulière",
+      "skillsLevelIds": ["3", "4"]
+    },
+    {
+      "idDifficultyRating": "3",
+      "estimatedDifficulty": "difficile",
+      "note": "Niveau avancé - expertise technique",
+      "skillsLevelIds": ["5", "6"]
+    },
+    {
+      "idDifficultyRating": "4",
+      "estimatedDifficulty": "très difficile",
+      "note": "Niveau expert - maîtrise complète",
+      "skillsLevelIds": ["7", "8"]
+    }
+  ]
+}
