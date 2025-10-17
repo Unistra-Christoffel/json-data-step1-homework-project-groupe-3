@@ -2,163 +2,163 @@
   "academicSubject": [
     {
       "idAcademicSubject": "1",
-      "academicSubjectStatus":"HTML/CSS"
+      "academicSubjectName":"HTML/CSS"
     },
     {
       "idAcademicSubject": "2",
-      "academicSubjectStatus":"JavaScript"
+      "academicSubjectName":"JavaScript"
     },
     {
       "idAcademicSubject": "3",
-      "academicSubjectStatus":"Frameworks JavaScript (React, Vue.js)"
+      "academicSubjectName":"Frameworks JavaScript (React, Vue.js)"
     },
     {
       "idAcademicSubject": "4",
-      "academicSubjectStatus":"Développement Backend (Node.js, PHP)"
+      "academicSubjectName":"Développement Backend (Node.js, PHP)"
     },
     {
       "idAcademicSubject": "5",
-      "academicSubjectStatus":"Bases de données (SQL, NoSQL)"
+      "academicSubjectName":"Bases de données (SQL, NoSQL)"
     },
     {
       "idAcademicSubject": "6",
-      "academicSubjectStatus":"UX/UI Design"
+      "academicSubjectName":"UX/UI Design"
     },
     {
       "idAcademicSubject": "7",
-      "academicSubjectStatus":"Responsive Design et Mobile First"
+      "academicSubjectName":"Responsive Design et Mobile First"
     },
     {
       "idAcademicSubject": "8",
-      "academicSubjectStatus":"Gestion de projet web (Agile, Scrum)"
+      "academicSubjectName":"Gestion de projet web (Agile, Scrum)"
     },
     {
       "idAcademicSubject": "9",
-      "academicSubjectStatus":"Versioning (Git, GitHub)"
+      "academicSubjectName":"Versioning (Git, GitHub)"
     },
     {
       "idAcademicSubject": "10",
-      "academicSubjectStatus":"Accessibilité web (WCAG)"
+      "academicSubjectName":"Accessibilité web (WCAG)"
     },
     {
       "idAcademicSubject": "11",
-      "academicSubjectStatus":"SEO et Référencement"
+      "academicSubjectName":"SEO et Référencement"
     },
     {
       "idAcademicSubject": "12",
-      "academicSubjectStatus":"APIs et Services Web (REST, GraphQL)"
+      "academicSubjectName":"APIs et Services Web (REST, GraphQL)"
     },
     {
       "idAcademicSubject": "13",
-      "academicSubjectStatus":"Tests unitaires et intégration continue"
+      "academicSubjectName":"Tests unitaires et intégration continue"
     },
     {
       "idAcademicSubject": "14",
-      "academicSubjectStatus":"Sécurité web"
+      "academicSubjectName":"Sécurité web"
     },
     {
       "idAcademicSubject": "15",
-      "academicSubjectStatus":"CMS et e-commerce (WordPress, Shopify)"
+      "academicSubjectName":"CMS et e-commerce (WordPress, Shopify)"
     },
     {
       "idAcademicSubject": "16",
-      "academicSubjectStatus":"Hébergement et déploiement"
+      "academicSubjectName":"Hébergement et déploiement"
     },
     {
       "idAcademicSubject": "17",
-      "academicSubjectStatus":"Veille technologique"
+      "academicSubjectName":"Veille technologique"
     },
     {
       "idAcademicSubject": "18",
-      "academicSubjectStatus":"Droit du numérique et RGPD"
+      "academicSubjectName":"Droit du numérique et RGPD"
     },
     {
       "idAcademicSubject": "19",
-      "academicSubjectStatus":"Communication professionnelle"
+      "academicSubjectName":"Communication professionnelle"
     },
     {
       "idAcademicSubject": "20",
-      "academicSubjectStatus":"Anglais technique"
+      "academicSubjectName":"Anglais technique"
     },
     {
       "idAcademicSubject": "21",
-      "academicSubjectStatus":"Projet tuteuré"
+      "academicSubjectName":"Projet tuteuré"
     },
     {
       "idAcademicSubject": "22",
-      "academicSubjectStatus":"Stage en entreprise"
+      "academicSubjectName":"Stage en entreprise"
     },
     {
       "idAcademicSubject": "23",
-      "academicSubjectStatus":"Mémoire professionnel"
+      "academicSubjectName":"Mémoire professionnel"
     },
     {
       "idAcademicSubject": "24",
-      "academicSubjectStatus":"Design graphique et logiciels (Photoshop, Illustrator)"
+      "academicSubjectName":"Design graphique et logiciels (Photoshop, Illustrator)"
     },
     {
       "idAcademicSubject": "25",
-      "academicSubjectStatus":"Identité visuelle et branding"
+      "academicSubjectName":"Identité visuelle et branding"
     },
     {
       "idAcademicSubject": "26",
-      "academicSubjectStatus":"Théorie des couleurs et typographie"
+      "academicSubjectName":"Théorie des couleurs et typographie"
     },
     {
       "idAcademicSubject": "27",
-      "academicSubjectStatus":"Création d'icônes et illustrations"
+      "academicSubjectName":"Création d'icônes et illustrations"
     },
     {
       "idAcademicSubject": "28",
-      "academicSubjectStatus":"Animation et motion design (After Effects)"
+      "academicSubjectName":"Animation et motion design (After Effects)"
     },
     {
       "idAcademicSubject": "29",
-      "academicSubjectStatus":"Prototypage et maquettage (Figma, Sketch)"
+      "academicSubjectName":"Prototypage et maquettage (Figma, Sketch)"
     },
     {
       "idAcademicSubject": "30",
-      "academicSubjectStatus":"Photographie web et retouche d'images"
+      "academicSubjectName":"Photographie web et retouche d'images"
     },
     {
       "idAcademicSubject": "31",
-      "academicSubjectStatus":"Marketing digital et stratégie web"
+      "academicSubjectName":"Marketing digital et stratégie web"
     },
     {
       "idAcademicSubject": "32",
-      "academicSubjectStatus":"Réseaux sociaux et community management"
+      "academicSubjectName":"Réseaux sociaux et community management"
     },
     {
       "idAcademicSubject": "33",
-      "academicSubjectStatus":"Content marketing et rédaction web"
+      "academicSubjectName":"Content marketing et rédaction web"
     },
     {
       "idAcademicSubject": "34",
-      "academicSubjectStatus":"E-mail marketing et automation"
+      "academicSubjectName":"E-mail marketing et automation"
     },
     {
       "idAcademicSubject": "35",
-      "academicSubjectStatus":"Publicité en ligne (Google Ads, Facebook Ads)"
+      "academicSubjectName":"Publicité en ligne (Google Ads, Facebook Ads)"
     },
     {
       "idAcademicSubject": "36",
-      "academicSubjectStatus":"Analytics et mesure de performance (Google Analytics)"
+      "academicSubjectName":"Analytics et mesure de performance (Google Analytics)"
     },
     {
       "idAcademicSubject": "37",
-      "academicSubjectStatus":"Conversion et optimisation UX"
+      "academicSubjectName":"Conversion et optimisation UX"
     },
     {
       "idAcademicSubject": "38",
-      "academicSubjectStatus":"Influence marketing et partenariats"
+      "academicSubjectName":"Influence marketing et partenariats"
     },
     {
       "idAcademicSubject": "39",
-      "academicSubjectStatus":"Growth hacking et acquisition client"
+      "academicSubjectName":"Growth hacking et acquisition client"
     },
     {
       "idAcademicSubject": "40",
-      "academicSubjectStatus":"Webmarketing et e-reputation"
+      "academicSubjectName":"Webmarketing et e-reputation"
     }
   ]
 }
