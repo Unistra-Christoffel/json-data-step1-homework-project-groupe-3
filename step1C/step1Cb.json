@@ -1,1 +1,164 @@
-
+{
+  "academicSubject": [
+    {
+      "idAcademicSubject": "1",
+      "academicSubjectStatus":"HTML/CSS"
+    },
+    {
+      "idAcademicSubject": "2",
+      "academicSubjectStatus":"JavaScript"
+    },
+    {
+      "idAcademicSubject": "3",
+      "academicSubjectStatus":"Frameworks JavaScript (React, Vue.js)"
+    },
+    {
+      "idAcademicSubject": "4",
+      "academicSubjectStatus":"Développement Backend (Node.js, PHP)"
+    },
+    {
+      "idAcademicSubject": "5",
+      "academicSubjectStatus":"Bases de données (SQL, NoSQL)"
+    },
+    {
+      "idAcademicSubject": "6",
+      "academicSubjectStatus":"UX/UI Design"
+    },
+    {
+      "idAcademicSubject": "7",
+      "academicSubjectStatus":"Responsive Design et Mobile First"
+    },
+    {
+      "idAcademicSubject": "8",
+      "academicSubjectStatus":"Gestion de projet web (Agile, Scrum)"
+    },
+    {
+      "idAcademicSubject": "9",
+      "academicSubjectStatus":"Versioning (Git, GitHub)"
+    },
+    {
+      "idAcademicSubject": "10",
+      "academicSubjectStatus":"Accessibilité web (WCAG)"
+    },
+    {
+      "idAcademicSubject": "11",
+      "academicSubjectStatus":"SEO et Référencement"
+    },
+    {
+      "idAcademicSubject": "12",
+      "academicSubjectStatus":"APIs et Services Web (REST, GraphQL)"
+    },
+    {
+      "idAcademicSubject": "13",
+      "academicSubjectStatus":"Tests unitaires et intégration continue"
+    },
+    {
+      "idAcademicSubject": "14",
+      "academicSubjectStatus":"Sécurité web"
+    },
+    {
+      "idAcademicSubject": "15",
+      "academicSubjectStatus":"CMS et e-commerce (WordPress, Shopify)"
+    },
+    {
+      "idAcademicSubject": "16",
+      "academicSubjectStatus":"Hébergement et déploiement"
+    },
+    {
+      "idAcademicSubject": "17",
+      "academicSubjectStatus":"Veille technologique"
+    },
+    {
+      "idAcademicSubject": "18",
+      "academicSubjectStatus":"Droit du numérique et RGPD"
+    },
+    {
+      "idAcademicSubject": "19",
+      "academicSubjectStatus":"Communication professionnelle"
+    },
+    {
+      "idAcademicSubject": "20",
+      "academicSubjectStatus":"Anglais technique"
+    },
+    {
+      "idAcademicSubject": "21",
+      "academicSubjectStatus":"Projet tuteuré"
+    },
+    {
+      "idAcademicSubject": "22",
+      "academicSubjectStatus":"Stage en entreprise"
+    },
+    {
+      "idAcademicSubject": "23",
+      "academicSubjectStatus":"Mémoire professionnel"
+    },
+    {
+      "idAcademicSubject": "24",
+      "academicSubjectStatus":"Design graphique et logiciels (Photoshop, Illustrator)"
+    },
+    {
+      "idAcademicSubject": "25",
+      "academicSubjectStatus":"Identité visuelle et branding"
+    },
+    {
+      "idAcademicSubject": "26",
+      "academicSubjectStatus":"Théorie des couleurs et typographie"
+    },
+    {
+      "idAcademicSubject": "27",
+      "academicSubjectStatus":"Création d'icônes et illustrations"
+    },
+    {
+      "idAcademicSubject": "28",
+      "academicSubjectStatus":"Animation et motion design (After Effects)"
+    },
+    {
+      "idAcademicSubject": "29",
+      "academicSubjectStatus":"Prototypage et maquettage (Figma, Sketch)"
+    },
+    {
+      "idAcademicSubject": "30",
+      "academicSubjectStatus":"Photographie web et retouche d'images"
+    },
+    {
+      "idAcademicSubject": "31",
+      "academicSubjectStatus":"Marketing digital et stratégie web"
+    },
+    {
+      "idAcademicSubject": "32",
+      "academicSubjectStatus":"Réseaux sociaux et community management"
+    },
+    {
+      "idAcademicSubject": "33",
+      "academicSubjectStatus":"Content marketing et rédaction web"
+    },
+    {
+      "idAcademicSubject": "34",
+      "academicSubjectStatus":"E-mail marketing et automation"
+    },
+    {
+      "idAcademicSubject": "35",
+      "academicSubjectStatus":"Publicité en ligne (Google Ads, Facebook Ads)"
+    },
+    {
+      "idAcademicSubject": "36",
+      "academicSubjectStatus":"Analytics et mesure de performance (Google Analytics)"
+    },
+    {
+      "idAcademicSubject": "37",
+      "academicSubjectStatus":"Conversion et optimisation UX"
+    },
+    {
+      "idAcademicSubject": "38",
+      "academicSubjectStatus":"Influence marketing et partenariats"
+    },
+    {
+      "idAcademicSubject": "39",
+      "academicSubjectStatus":"Growth hacking et acquisition client"
+    },
+    {
+      "idAcademicSubject": "40",
+      "academicSubjectStatus":"Webmarketing et e-reputation"
+    }
+  ]
+}
