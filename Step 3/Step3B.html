@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Création de Tâche - To-Do List</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* CSS IDENTIQUE (Compact & Robuste) */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Lato', sans-serif;
+            background: linear-gradient(145deg, #e7f7e7 0%, #d5e9d5 40%, #b8d4b8 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+        h1 {
+            font-family: 'Playfair Display', serif;
+            color: #2d5016;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2.2em;
+        }
+        form { display: flex; flex-direction: column; gap: 15px; }
+        fieldset {
+            border: 1px solid #6ba368;
+            border-radius: 8px;
+            padding: 15px;
+        }
+        .fieldset-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 15px;
+        }
+        legend {
+            font-family: 'Playfair Display', serif;
+            color: #4a7c59;
+            font-size: 1.1em;
+            font-weight: bold;
+            padding: 0 10px;
+            margin-left: -10px;
+            margin-bottom: 10px;
+        }
+        .form-group { display: flex; flex-direction: column; gap: 5px; }
+        label { font-weight: 700; color: #2d5016; font-size: 0.9em; }
+        label .required { color: #c0392b; }
+        input[type="text"], input[type="email"], input[type="datetime-local"], input[type="number"], input[type="date"], textarea, select {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 0.95em;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #4a7c59;
+            box-shadow: 0 0 0 3px rgba(74, 124, 89, 0.2);
+        }
+        textarea { resize: vertical; min-height: 80px; }
+        input[type="email"]:invalid:not(:placeholder-shown) { border-color: #c0392b; }
+        input[type="email"]:valid:not(:placeholder-shown) { border-color: #4a7c59; }
+        .radio-group {
+            display: flex; flex-wrap: wrap; gap: 15px;
+            padding: 8px 12px;
+            background: #f8f9fa; border-radius: 8px; border: 1px solid #eee;
+        }
+        .radio-item { display: flex; align-items: center; gap: 5px; }
+        .radio-item label { font-weight: normal; color: #333; cursor: pointer; font-size: 0.95em; }
+        input[type="radio"] { accent-color: #2d5016; }
+        .file-upload-group {
+            border: 2px dashed #6ba368; background-color: #f9fff9; padding: 15px; border-radius: 8px; text-align: center;
+        }
+        .file-upload-group label { margin-bottom: 10px; font-size: 1em; color: #2d5016; }
+        .file-upload-group input[type="file"] { padding: 5px; font-size: 0.9em; }
+        .btn-group { display: flex; gap: 10px; margin-top: 10px; }
+        input[type="submit"], input[type="reset"], button[type="button"] {
+            padding: 10px 20px; border: none; border-radius: 8px; font-size: 0.95em; font-weight: 700; cursor: pointer; transition: all 0.3s ease; flex: 1;
+        }
+        input[type="submit"], button[type="button"] { background-color: #2d5016; color: white; }
+        input[type="submit"]:hover, button[type="button"]:hover { background-color: #1f360e; transform: translateY(-1px); }
+        input[type="reset"] { background-color: #e0e0e0; color: #333; }
+        .btn-add {
+            padding: 6px 12px; background: #4a7c59; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 0.85em; align-self: flex-start; transition: background 0.3s; margin-top: 5px;
+        }
+        .btn-add:hover { background: #2d5016; }
+        .view-tasks-link {
+            display: inline-block; margin-bottom: 15px; margin-right: 10px; padding: 8px 16px; background-color: #4a7c59; color: white; text-decoration: none; border-radius: 8px; font-weight: 700; transition: all 0.3s ease; font-size: 0.9em;
+        }
+        .view-tasks-link:hover { background-color: #2d5016; transform: translateY(-2px); }
+        .subtask-item { margin-bottom: 10px; padding: 10px; background: #f9fff9; border: 1px solid #d5e9d5; border-radius: 8px; }
+        .subtask-title { width: 100%; margin-bottom: 5px; }
+        .subtask-desc { width: 100%; min-height: 40px; }
+        @media (max-width: 768px) {
+            .container { padding: 15px; }
+            .btn-group { flex-direction: column; }
+            .fieldset-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <h1>Nouvelle Tâche</h1>
+        
+        <a href="./../../Html/Home.html" class="view-tasks-link">Vers Home</a>
+        <a href="./../3D_Mise_a_jour_Archivage/TasksSummary-3D.html" class="view-tasks-link">📋 Voir toutes les tâches</a>
+        
+        <form id="taskForm" action="traitement.php" method="POST" enctype="multipart/form-data">
+            
+            <fieldset>
+                <legend>Personne en charge</legend>
+                <div class="fieldset-grid">
+                    <div class="form-group">
+                        <label for="assignation">Nom et Prénom <span class="required">*</span></label>
+                        <input type="text" id="assignation" name="assignation" required placeholder="Ex : Laurent Boyer">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Adresse E-mail <span class="required">*</span></label>
+                        <input type="email" id="email" name="email" required placeholder=" Ex : nom.prenom@exemple.com">
+                    </div>
+                </div>
+            </fieldset>
+
+            <div class="form-group">
+                <label for="libelle">Nom de la tâche <span class="required">*</span></label>
+                <input type="text" id="libelle" name="libelle" required placeholder="Ex: TP HTML/CSS">
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description </label>
+                <textarea id="description" name="description" rows="4" placeholder="Décrivez ici les objectifs et les étapes cette nouvelle tâche..."></textarea>
+            </div>
+
+            <fieldset>
+                <legend>Planification et Échéance</legend>
+                <div class="fieldset-grid">
+                    <div class="form-group">
+                        <label for="date_echeance">Date d'échéance </label>
+                        <input type="date" id="date_echeance" name="date_echeance">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="priorite">Priorité <span class="required">*</span></label>
+                        <select id="priorite" name="idPriorite">
+                            <option>Choisir une priorité</option>                                                      
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="date_creation">Date de création</label>
+                        <input type="date" id="date_creation" name="date_creation" readonly>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="temps_passe">Temps passé (minutes)</label>
+                        <input type="number" id="temps_passe" name="temps_passe" min="0" value="0" placeholder="0">
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset class="form-group">
+                <legend>Statut</legend>
+                <label>Statut de progression <span class="required">*</span></label>
+                <div class="radio-group">
+                    <div class="radio-item"><input type="radio" id="prog1" name="idTaskProgression" value="1" checked required><label for="prog1">Nouvelle tâche</label></div>
+                    <div class="radio-item"><input type="radio" id="prog3" name="idTaskProgression" value="3" required><label for="prog3">En cours</label></div>
+                    <div class="radio-item"><input type="radio" id="prog4" name="idTaskProgression" value="4" required><label for="prog4">Bloqué</label></div>
+                    <div class="radio-item"><input type="radio" id="prog6" name="idTaskProgression" value="6" required><label for="prog6">Terminé</label></div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Catégorisation</legend>
+                <div class="fieldset-grid">
+                    <div class="form-group">
+                        <label for="academic_subject">Sujet académique <span class="required">*</span></label>
+                        <select id="academic_subject" name="academic_subject" required>
+                            <option value="">-- Sélectionnez un sujet --</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="skills_level">Niveau de compétence <span class="required">*</span></label>
+                        <select id="skills_level" name="skills_level" required>
+                            <option value="">-- Sélectionnez un niveau --</option>                            
+                        </select>
+                    </div>
+
+                    <div class="form-group">                    
+                        <label for="difficulty_rating">Difficulté estimée <span class="required">*</span></label>
+                        <select id="difficulty_rating" name="difficulty_rating" required>
+                            <option value="">-- Sélectionnez un niveau --</option>                            
+                        </select>
+                    </div>
+                </div>
+            </fieldset>
+
+            <div class="form-group file-upload-group">
+                <label for="document_pdf">📥 Déposer un document PDF</label>
+                <input type="file" id="document_pdf" name="document_pdf[]" accept=".pdf" multiple>
+            </div>
+
+            <fieldset class="form-group">
+                <label>📋 Sous-tâches</label>
+                <div class="file-list" id="subtask-list">
+                    <div class="subtask-item">
+                        <input type="text" name="subtask[]" placeholder="Nom de la sous-tâche" class="subtask-title">
+                        <textarea name="subtaskDescription[]" placeholder="Description de la sous-tâche (optionnel)" rows="2" class="subtask-desc"></textarea>
+                    </div>
+                </div>
+                <button type="button" class="btn-add" onclick="ajouterSousTache()">+ Ajouter une sous-tâche</button>
+            </fieldset>
+
+            <fieldset class="form-group">
+                <label>Liens de documentation</label>
+                <div class="file-list" id="doc-list">
+                    <input type="url" name="documentation[]" placeholder="https://exemple.com/doc1">
+                </div>
+                <button type="button" class="btn-add" onclick="ajouterDoc()">+ Ajouter un lien</button>
+            </fieldset>
+
+            <fieldset class="btn-group">                
+                <input type="reset" value="Réinitialiser">
+                <button type="button" onclick="saveTask()">Créer la tâche</button>
+            </fieldset>
+        </form>
+    </main>
+
+    <script>
+    // ============================================================
+    // 1. DONNÉES JSON COMPLÈTES (Copiées-Collées de tes fichiers)
+    // ============================================================
+
+    // --- A. Données de Priorité (priorityStatus.json) ---
+    const rawPriorityData = {
+      "priorityStatus": [
+        { "idPriorite": 1, "priorite": "Important" },
+        { "idPriorite": 2, "priorite": "Haut" },
+        { "idPriorite": 3, "priorite": "Moyen" },
+        { "idPriorite": 4, "priorite": "Bas" },
+        { "idPriorite": 5, "priorite": "Non important" }
+      ]
+    };
+
+    // --- B. Données des Sujets Académiques (academic_subjects.json) ---
+    // J'ai intégré les 40 sujets demandés
+    const rawSubjectsData = {
+      "academicConfiguration": {
+        "subjects": [
+          { "idAcademicSubject": "1", "academicSubjectName": "HTML/CSS" },
+          { "idAcademicSubject": "2", "academicSubjectName": "JavaScript" },
+          { "idAcademicSubject": "3", "academicSubjectName": "Frameworks JavaScript (React, Vue.js)" },
+          { "idAcademicSubject": "4", "academicSubjectName": "Développement Backend (Node.js, PHP)" },
+          { "idAcademicSubject": "5", "academicSubjectName": "Bases de données (SQL, NoSQL)" },
+          { "idAcademicSubject": "6", "academicSubjectName": "UX/UI Design" },
+          { "idAcademicSubject": "7", "academicSubjectName": "Responsive Design et Mobile First" },
+          { "idAcademicSubject": "8", "academicSubjectName": "Gestion de projet web (Agile, Scrum)" },
+          { "idAcademicSubject": "9", "academicSubjectName": "Versioning (Git, GitHub)" },
+          { "idAcademicSubject": "10", "academicSubjectName": "Accessibilité web (WCAG)" },
+          { "idAcademicSubject": "11", "academicSubjectName": "SEO et Référencement" },
+          { "idAcademicSubject": "12", "academicSubjectName": "APIs et Services Web (REST, GraphQL)" },
+          { "idAcademicSubject": "13", "academicSubjectName": "Tests unitaires et intégration continue" },
+          { "idAcademicSubject": "14", "academicSubjectName": "Sécurité web" },
+          { "idAcademicSubject": "15", "academicSubjectName": "CMS et e-commerce (WordPress, Shopify)" },
+          { "idAcademicSubject": "16", "academicSubjectName": "Hébergement et déploiement" },
+          { "idAcademicSubject": "17", "academicSubjectName": "Veille technologique" },
+          { "idAcademicSubject": "18", "academicSubjectName": "Droit du numérique et RGPD" },
+          { "idAcademicSubject": "19", "academicSubjectName": "Communication professionnelle" },
+          { "idAcademicSubject": "20", "academicSubjectName": "Anglais technique" },
+          { "idAcademicSubject": "21", "academicSubjectName": "Projet tuteuré" },
+          { "idAcademicSubject": "22", "academicSubjectName": "Stage en entreprise" },
+          { "idAcademicSubject": "23", "academicSubjectName": "Mémoire professionnel" },
+          { "idAcademicSubject": "24", "academicSubjectName": "Design graphique et logiciels (Photoshop, Illustrator)" },
+          { "idAcademicSubject": "25", "academicSubjectName": "Identité visuelle et branding" },
+          { "idAcademicSubject": "26", "academicSubjectName": "Théorie des couleurs et typographie" },
+          { "idAcademicSubject": "27", "academicSubjectName": "Création d'icônes et illustrations" },
+          { "idAcademicSubject": "28", "academicSubjectName": "Animation et motion design (After Effects)" },
+          { "idAcademicSubject": "29", "academicSubjectName": "Prototypage et maquettage (Figma, Sketch)" },
+          { "idAcademicSubject": "30", "academicSubjectName": "Photographie web et retouche d'images" },
+          { "idAcademicSubject": "31", "academicSubjectName": "Marketing digital et stratégie web" },
+          { "idAcademicSubject": "32", "academicSubjectName": "Réseaux sociaux et community management" },
+          { "idAcademicSubject": "33", "academicSubjectName": "Content marketing et rédaction web" },
+          { "idAcademicSubject": "34", "academicSubjectName": "E-mail marketing et automation" },
+          { "idAcademicSubject": "35", "academicSubjectName": "Publicité en ligne (Google Ads, Facebook Ads)" },
+          { "idAcademicSubject": "36", "academicSubjectName": "Analytics et mesure de performance (Google Analytics)" },
+          { "idAcademicSubject": "37", "academicSubjectName": "Conversion et optimisation UX" },
+          { "idAcademicSubject": "38", "academicSubjectName": "Influence marketing et partenariats" },
+          { "idAcademicSubject": "39", "academicSubjectName": "Growth hacking et acquisition client" },
+          { "idAcademicSubject": "40", "academicSubjectName": "Webmarketing et e-reputation" }
+        ]
+      }
+    };
+
+    // --- C. Données des Niveaux de Compétence (skills_evaluation.json) ---
+    const rawSkillsData = {
+      "skillsEvaluation": {
+        "skillsLevels": [
+          { "idSkillsLevel": "1", "level": "débutant"},
+          { "idSkillsLevel": "2", "level": "initié"},
+          { "idSkillsLevel": "3", "level": "intermédiaire"},
+          { "idSkillsLevel": "4", "level": "confirmé"},
+          { "idSkillsLevel": "5", "level": "avancé"},
+          { "idSkillsLevel": "6", "level": "expert"},
+          { "idSkillsLevel": "7", "level": "expert confirmé"},
+          { "idSkillsLevel": "8", "level": "maître"}
+        ]
+      }
+    };
+
+    // --- D. Données de Difficulté (difficultyRating.json) ---
+    const rawDifficultyData = {
+      "difficultyRatings": [
+        { "idDifficultyRating": "1", "estimatedDifficulty": "facile"},
+        { "idDifficultyRating": "2", "estimatedDifficulty": "moyen"},
+        { "idDifficultyRating": "3", "estimatedDifficulty": "difficile"},
+        { "idDifficultyRating": "4", "estimatedDifficulty": "très difficile"}
+      ]
+    };
+
+    // ============================================================
+    // 2. FONCTION DE GÉNÉRATION DYNAMIQUE (Le moteur)
+    // ============================================================
+    
+    function genererOptions(selectId, dataArray, keyId, keyLabel, keyDesc = null) {
+        // On récupère la balise <select> dans le HTML
+        const select = document.getElementById(selectId);
+        
+        // On parcourt chaque élément du tableau JSON
+        dataArray.forEach(item => {
+            // 1. Création du texte visible
+            let text = item[keyLabel];
+            // Si une description existe (ex: pour Skills ou Difficulté), on l'ajoute
+            if (keyDesc && item[keyDesc]) {
+                text += ` - ${item[keyDesc]}`;
+            }
+
+            // 2. Création de la balise <option>
+            const option = document.createElement('option');
+            option.value = item[keyId]; // La valeur envoyée (l'ID)
+            option.textContent = text;  // Ce que l'utilisateur voit
+            
+            // 3. Ajout dans le formulaire
+            select.appendChild(option);
+        });
+    }
+
+    // ============================================================
+    // 3. EXÉCUTION : REMPLISSAGE DES LISTES (Le démarrage)
+    // ============================================================
+
+    // Note importante : On doit aller chercher le tableau (Array) au bon endroit dans la structure JSON
+    
+    // A. Priorité
+    genererOptions('priorite', rawPriorityData.priorityStatus, 'idPriorite', 'priorite');
+
+    // B. Sujets Académiques (Attention : c'est dans .academicConfiguration.subjects)
+    genererOptions(
+        'academic_subject', 
+        rawSubjectsData.academicConfiguration.subjects, 
+        'idAcademicSubject', 
+        'academicSubjectName'
+    );
+
+    // C. Niveaux de Compétence (Dans .skillsEvaluation.skillsLevels)
+    genererOptions(
+        'skills_level', 
+        rawSkillsData.skillsEvaluation.skillsLevels, 
+        'idSkillsLevel', 
+        'level', 
+        'description'
+    );
+
+    // D. Difficulté (Directement dans .difficultyRatings)
+    genererOptions(
+        'difficulty_rating', 
+        rawDifficultyData.difficultyRatings, 
+        'idDifficultyRating', 
+        'estimatedDifficulty', 
+        'note'
+    );
+
+
+    // ============================================================
+    // 4. FONCTIONNALITÉS DU FORMULAIRE (Ton code existant)
+    // ============================================================
+
+    function setCreationDate() {
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        document.getElementById('date_creation').value = `${year}-${month}-${day}`;
+    }
+    setCreationDate();
+
+    function ajouterDoc() {
+        const docList = document.getElementById('doc-list');
+        const newInput = document.createElement('input');
+        newInput.type = 'url';
+        newInput.name = 'documentation[]';
+        newInput.placeholder = 'https://exemple.com/doc';
+        docList.appendChild(newInput);
+    }
+
+    function ajouterSousTache() {
+        const subtaskList = document.getElementById('subtask-list');
+        const subtaskItem = document.createElement('div');
+        subtaskItem.className = 'subtask-item';
+        const inputTitle = document.createElement('input');
+        inputTitle.type = 'text';
+        inputTitle.name = 'subtask[]';
+        inputTitle.placeholder = 'Nom de la sous-tâche';
+        inputTitle.className = 'subtask-title';
+        const inputDesc = document.createElement('textarea');
+        inputDesc.name = 'subtaskDescription[]';
+        inputDesc.placeholder = 'Description de la sous-tâche (optionnel)';
+        inputDesc.rows = 2;
+        inputDesc.className = 'subtask-desc';
+        subtaskItem.appendChild(inputTitle);
+        subtaskItem.appendChild(inputDesc);
+        subtaskList.appendChild(subtaskItem);
+    }
+
+    function saveTask() {
+        console.log("🚀 Début de la fonction saveTask()");
+        
+        let libelle = document.getElementById('libelle').value;
+        let description = document.getElementById('description').value;
+        let assignation = document.getElementById('assignation').value;
+        let date_creation = document.getElementById('date_creation').value;
+        let temps_passe = document.getElementById('temps_passe').value;
+        let idPriorite = document.getElementById('priorite').value;
+        let idTaskProgression = document.querySelector('input[name="idTaskProgression"]:checked').value;
+        let idAcademicSubject = document.getElementById('academic_subject').value;
+        let idSkillsLevel = document.getElementById('skills_level').value;
+        let idDifficultyRating = document.getElementById('difficulty_rating').value;
+        
+        let subtaskInputs = document.querySelectorAll('input[name="subtask[]"]');
+        let subtaskDescInputs = document.querySelectorAll('textarea[name="subtaskDescription[]"]');
+        let subtasks = [];
+        
+        subtaskInputs.forEach((input, index) => {
+            if (input.value.trim() !== '') {
+                subtasks.push({
+                    subTaskLibelle: input.value.trim(),
+                    subTaskDescription: subtaskDescInputs[index] ? subtaskDescInputs[index].value.trim() : ''
+                });
+            }
+        });
+        
+        let documentationInputs = document.querySelectorAll('input[name="documentation[]"]');
+        let documentation = [];
+        documentationInputs.forEach(input => {
+            if (input.value.trim() !== '') {
+                documentation.push(input.value.trim());
+            }
+        });
+        
+           const fileInput = document.getElementById('document_pdf');
+        let fichiers_joints = [];
+        
+        if (fileInput.files.length > 0) {
+            for (let i = 0; i < fileInput.files.length; i++) {
+                // On récupère le nom du fichier depuis l'objet File (FileList)
+                fichiers_joints.push(fileInput.files[i].name);
+            }
+        }
+
+        let tasksList = [];
+        let existingTasks = localStorage.getItem("tasksData");
+        if (existingTasks) tasksList = JSON.parse(existingTasks);
+        
+        let newId = tasksList.length + 1;
+        let dateCreationISO = new Date(date_creation).toISOString();
+        
+        let subTaskIds = [];
+        let subtasksToStore = subtasks.map((subtask, index) => {
+            const subtaskId = `${newId}-${index + 1}`;
+            subTaskIds.push(subtaskId);
+            return {
+                taskId: newId,
+                subTaskId: `${index + 1}`,
+                id: subtaskId,
+                subTaskLibelle: subtask.subTaskLibelle,
+                subTaskDescription: subtask.subTaskDescription
+            };
+        });
+        
+        let newTask = {
+            id: newId,
+            libelle: libelle,
+            date_de_creation: dateCreationISO,
+            date_de_modification: dateCreationISO,
+            date_de_completion: null,
+            "compteur_de_temps_passe(mn)": parseInt(temps_passe) || 0,
+            description: description,
+            assignation: assignation,
+            documentation: documentation,
+            fichiers_joints: fichiers_joints,
+            idPriorite: idPriorite,
+            idTaskProgression: idTaskProgression,
+            idAcademicSubject: idAcademicSubject,
+            idSkillsLevel: idSkillsLevel,
+            idDifficultyRating: idDifficultyRating,
+            subTask_ids: subTaskIds,
+            subtasks: subtasksToStore
+        };
+        
+        tasksList.push(newTask);
+        localStorage.setItem("tasksData", JSON.stringify(tasksList));
+        
+        if (subtasksToStore.length > 0) {
+            let existingSubtasks = [];
+            const storedSubtasks = localStorage.getItem("subtasksData");
+            if (storedSubtasks) existingSubtasks = JSON.parse(storedSubtasks);
+            existingSubtasks.push(...subtasksToStore);
+            localStorage.setItem("subtasksData", JSON.stringify(existingSubtasks));
+        }
+        
+        document.getElementById('taskForm').reset();
+        setCreationDate();
+        
+        let viewTasks = confirm('✅ Tâche créée avec succès !\n\nID: ' + newId + '\nLibellé: ' + libelle + '\n\nVoulez-vous voir toutes les tâches ?');
+        if (viewTasks) window.location.href = './../3D_Mise_a_jour_Archivage/TasksSummary-3D.html';
+    }
+</script>
+</body>
+</html>
