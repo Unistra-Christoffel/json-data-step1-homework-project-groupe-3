@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Récapitulatif des Tâches - To-Do List</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+       /* --- RESET & BASE --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background: linear-gradient(145deg, #e7f7e7 0%, #d5e9d5 40%, #b8d4b8 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* --- LAYOUT --- */
+        .app-container {
+            width: 100%;
+            max-width: 1600px; /* Largeur standardisée */
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            color: #2d5016;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif; 
+            color: #2d5016; 
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        /* --- TOOLBAR --- */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .toolbar__counter {
+            font-size: 1.1em;
+            color: #4a7c59;
+            font-weight: 700;
+        }
+
+        .toolbar__filters {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .toolbar__actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        /* --- BOUTONS --- */
+        .btn-filter {
+            padding: 8px 16px;
+            border: 2px solid #4a7c59;
+            border-radius: 6px;
+            background-color: white;
+            color: #4a7c59;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+        }
+
+        .btn-filter:hover { background-color: #4a7c59; color: white; }
+        .btn-filter.active { background-color: #2d5016; color: white; border-color: #2d5016; }
+
+        .btn-primary {
+            padding: 12px 24px;
+            background-color: #2d5016;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            display: inline-block;
+            border: none;
+            text-align: center;
+        }
+
+        .btn-primary:hover {
+            background-color: #1f360e;
+            transform: translateY(-2px);
+        }
+
+        .link-back {
+            display: inline-block;
+            margin-bottom: 15px;
+            color: #4a7c59;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        .link-back:hover { color: #2d5016; text-decoration: underline; }
+
+        /* --- TABLEAU --- */
+        .subtasks-section {
+            margin-top: 40px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            width: 100%;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            min-width: 900px;
+        }
+
+        .data-table thead { background-color: #2d5016; color: white; }
+        
+        .data-table th, .data-table td {
+            padding: 12px 10px;
+            text-align: left;
+            font-size: 0.95em;
+            vertical-align: middle;
+        }
+
+        .data-table th {
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 15px 10px;
+        }
+
+        .data-table tbody tr {
+            border-bottom: 1px solid #e0e0e0;
+            transition: background-color 0.2s ease;
+        }
+        .data-table tbody tr:hover { background-color: #f9fff9; }
+
+        .cell-description {
+            max-width: 250px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            color: #666;
+        }
+
+        /* --- BADGES --- */
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 700;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .priority-1, .priority-2, .status-4, .difficulty-4 { background-color: #e74c3c; color: white; }
+        .priority-3, .status-2, .status-3, .difficulty-3 { background-color: #f39c12; color: white; }
+        .priority-4, .priority-5, .status-7 { background-color: #95a5a6; color: white; }
+        .status-1, .skills-1 { background-color: #3498db; color: white; }
+        .status-5, .skills-2 { background-color: #9b59b6; color: white; }
+        .status-6, .difficulty-1 { background-color: #27ae60; color: white; }
+        .skills-3 { background-color: #e67e22; color: white; }
+        .skills-4 { background-color: #c0392b; color: white; }
+        .difficulty-2 { background-color: #1abc9c; color: white; }
+        .difficulty-5 { background-color: #8e44ad; color: white; }
+
+        /* --- ACTIONS (Icônes) --- */
+        .actions-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            justify-content: center;
+        }
+
+        .btn-icon {
+            padding: 5px 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.9em;
+            cursor: pointer;
+            background-color: white;
+            transition: all 0.2s;
+        }
+
+        .btn-icon:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .btn-icon:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        /* Couleurs boutons actifs */
+        .btn-icon.active-1 { background-color: #3498db; color: white; border-color: #3498db; }
+        .btn-icon.active-2, .btn-icon.active-3 { background-color: #f39c12; color: white; border-color: #f39c12; }
+        .btn-icon.active-4 { background-color: #e74c3c; color: white; border-color: #e74c3c; }
+        .btn-icon.active-5 { background-color: #9b59b6; color: white; border-color: #9b59b6; }
+        .btn-icon.active-6 { background-color: #27ae60; color: white; border-color: #27ae60; }
+        .btn-icon.active-7 { background-color: #95a5a6; color: white; border-color: #95a5a6; }
+
+        /* --- EMPTY STATE --- */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #95a5a6;
+        }
+        .empty-state__icon { font-size: 4em; margin-bottom: 20px; }
+        .empty-state h2 { font-family: 'Playfair Display', serif; color: #7f8c8d; }
+
+        /* --- MEDIA QUERIES --- */
+        @media (max-width: 768px) {
+            .app-container { padding: 20px; margin: 0; border-radius: 0; }
+            .toolbar { flex-direction: column; align-items: stretch; text-align: center; }
+            .toolbar__filters, .toolbar__actions { justify-content: center; width: 100%; }
+            .btn-primary { width: 100%; margin-bottom: 5px; }
+            .btn-filter { width: 100%; margin-bottom: 5px; }
+            .data-table th, .data-table td { font-size: 0.85em; padding: 8px 5px; }
+        }
+    </style>
+
+  <script>
+        let priorityList = [], taskProgressionList = [], academicSubjectsList = [], skillsLevelList = [], difficultyRatingList = [];
+        let currentFilter = 'all'; 
+        let tasksList = [];
+        
+        console.log("🚀 Chargement de la page de récapitulatif des tâches");
+        
+        let storedTasks = localStorage.getItem("tasksData");
+        if (storedTasks) tasksList = JSON.parse(storedTasks);
+        
+        const getStatusIcon = (statusId) => {
+            const icons = { '1': '📝', '2': '⏸️', '3': '▶️', '4': '🚫', '5': '✔️', '6': '✅', '7': '📦' };
+            return icons[statusId] || '❓';
+        };
+
+        document.onreadystatechange = function() {
+            if (document.readyState === "complete") loadReferenceData();
+        };
+        
+        function loadReferenceData() {
+            priorityList = [{ "idPriorite": "1", "priorite": "Important" }, { "idPriorite": "2", "priorite": "Haut" }, { "idPriorite": "3", "priorite": "Moyen" }, { "idPriorite": "4", "priorite": "Bas" }, { "idPriorite": "5", "priorite": "Non important" }];
+            taskProgressionList = [{ "idTaskProgression": "1", "taskProgressionStatus": "Nouvelle tâche" }, { "idTaskProgression": "2", "taskProgressionStatus": "conception" }, { "idTaskProgression": "3", "taskProgressionStatus": "en cours" }, { "idTaskProgression": "4", "taskProgressionStatus": "bloqué" }, { "idTaskProgression": "5", "taskProgressionStatus": "en attente de validation" }, { "idTaskProgression": "6", "taskProgressionStatus": "Terminé" }, { "idTaskProgression": "7", "taskProgressionStatus": "Archivé" }];
+            academicSubjectsList = [{ "idAcademicSubject": "1", "academicSubjectName": "HTML/CSS" }, { "idAcademicSubject": "2", "academicSubjectName": "JavaScript" }, { "idAcademicSubject": "3", "academicSubjectName": "Frameworks JavaScript (React, Vue.js)" }, { "idAcademicSubject": "4", "academicSubjectName": "Développement Backend (Node.js, PHP)" }, { "idAcademicSubject": "5", "academicSubjectName": "Bases de données (SQL, NoSQL)" }, { "idAcademicSubject": "6", "academicSubjectName": "UX/UI Design" }, { "idAcademicSubject": "7", "academicSubjectName": "Responsive Design et Mobile First" }, { "idAcademicSubject": "8", "academicSubjectName": "Gestion de projet web (Agile, Scrum)" }, { "idAcademicSubject": "9", "academicSubjectName": "Versioning (Git, GitHub)" }, { "idAcademicSubject": "10", "academicSubjectName": "Accessibilité web (WCAG)" }, { "idAcademicSubject": "11", "academicSubjectName": "SEO et Référencement" }, { "idAcademicSubject": "12", "academicSubjectName": "APIs et Services Web (REST, GraphQL)" }];
+            skillsLevelList = [{ "idSkillsLevel": "1", "skillsLevel": "Débutant" }, { "idSkillsLevel": "2", "skillsLevel": "Intermédiaire" }, { "idSkillsLevel": "3", "skillsLevel": "Avancé" }, { "idSkillsLevel": "4", "skillsLevel": "Expert" }];
+            difficultyRatingList = [{ "idDifficultyRating": "1", "difficultyRating": "Très facile" }, { "idDifficultyRating": "2", "difficultyRating": "Facile" }, { "idDifficultyRating": "3", "difficultyRating": "Moyen" }, { "idDifficultyRating": "4", "difficultyRating": "Difficile" }, { "idDifficultyRating": "5", "difficultyRating": "Très difficile" }];
+            generateTasksTable();
+        }
+        
+function generateTasksTable(filter = 'all') {
+            const tbody = document.getElementById('tasksTableBody');
+            const taskCount = document.getElementById('taskCount');
+            
+            let filteredTasks;
+            if (filter === 'all') filteredTasks = tasksList.filter(task => task.idTaskProgression != "7");
+            else if (filter === '6') filteredTasks = tasksList.filter(task => task.idTaskProgression == "6");
+            else if (filter === '7') filteredTasks = tasksList.filter(task => task.idTaskProgression == "7");
+            else filteredTasks = tasksList;
+            
+            const filterLabel = filter === 'all' ? 'active(s)' : filter === '6' ? 'terminée(s)' : filter === '7' ? 'archivée(s)' : '';
+            taskCount.textContent = `${filteredTasks.length} tâche(s) ${filterLabel} / ${tasksList.length} total`;
+            
+            tbody.innerHTML = '';
+            
+            if (filteredTasks.length === 0) {
+                const message = filter === 'all' ? 'Aucune tâche active' : filter === '6' ? 'Aucune tâche terminée' : 'Aucune tâche archivée';
+                // CORRECTION : colspan passe à 12 (car il n'y a pas la colonne Actions)
+                tbody.innerHTML = `<tr><td colspan="12" class="empty-state"><div class="empty-state__icon">📋</div><h2>${message}</h2><p>${filter === 'all' ? 'Commencez par créer votre première tâche !' : 'Changez de filtre pour voir d\'autres tâches.'}</p>${filter === 'all' ? '<a href="Form-ToDoList.html" class="btn-primary">Créer une tâche</a>' : ''}</td></tr>`;
+                return;
+            }
+            
+            let htmlContent = '';
+            filteredTasks.forEach((task) => {
+                const priorityObj = priorityList.find(e => e.idPriorite == task.idPriorite);
+                const priorityLabel = priorityObj ? priorityObj.priorite : 'Non défini';
+                const progressObj = taskProgressionList.find(e => e.idTaskProgression == task.idTaskProgression);
+                const progressLabel = progressObj ? progressObj.taskProgressionStatus : 'Non défini';
+                const subjectObj = academicSubjectsList.find(e => e.idAcademicSubject == task.idAcademicSubject);
+                const subjectLabel = subjectObj ? subjectObj.academicSubjectName : 'Non défini';
+                const dateCreation = new Date(task.date_de_creation);
+                const dateFormatted = dateCreation.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+                let skillsLevel = skillsLevelList.find(s => s.idSkillsLevel == task.idSkillsLevel);
+                let skillsLabel = skillsLevel ? skillsLevel.skillsLevel : 'N/A';
+                let difficulty = difficultyRatingList.find(d => d.idDifficultyRating == task.idDifficultyRating);
+                let difficultyLabel = difficulty ? difficulty.difficultyRating : 'N/A';
+                
+                // --- 1. GESTION DES BOUTONS D'ACTIONS (PLACÉ ICI EN PREMIER) ---
+                let statusButtons = '';
+                taskProgressionList.forEach(status => {
+                    const isActive = status.idTaskProgression == task.idTaskProgression;
+                    const activeClass = isActive ? `active-${status.idTaskProgression}` : '';
+                    const disabled = isActive ? 'disabled' : '';
+                    statusButtons += `<button class="btn-icon ${activeClass}" data-task-id="${task.id}" data-status-id="${status.idTaskProgression}" onclick="updateTaskStatus(${task.id}, '${status.idTaskProgression}')" ${disabled} title="${status.taskProgressionStatus}">${getStatusIcon(status.idTaskProgression)}</button>`;
+                });
+                
+                // --- GESTION DES LIENS (Utilisation de classes CSS) ---
+                let linksHtml = '<span class="empty-content">-</span>';
+                if (task.documentation && task.documentation.length > 0) {
+                    linksHtml = task.documentation.map(link => 
+                        `<a href="${link}" target="_blank" class="doc-link" title="${link}">🔗 Lien</a>`
+                    ).join(''); 
+                }
+
+                // --- GESTION DES FICHIERS (Utilisation de classes CSS) ---
+                let filesHtml = '<span class="empty-content">-</span>';
+                if (task.fichiers_joints && task.fichiers_joints.length > 0) {
+                    filesHtml = task.fichiers_joints.map(file => 
+                        `<span title="${file}" class="file-item">📄 ${file}</span>`
+                    ).join('');
+                }
+
+                // --- GÉNÉRATION HTML CORRIGÉE (12 colonnes) ---
+                htmlContent += `
+                    <tr data-task-id="${task.id}">
+                        <td><strong>${task.libelle}</strong></td>
+                        <td class="cell-description">${task.description || 'Aucune description'}</td>
+                        <td>${task.assignation}</td>
+                        <td>${subjectLabel}</td>
+                        <td><span class="badge skills-${task.idSkillsLevel}">${skillsLabel}</span></td>
+                        <td><span class="badge difficulty-${task.idDifficultyRating}">${difficultyLabel}</span></td>
+                        <td><span class="badge priority-${task.idPriorite}">${priorityLabel}</span></td>
+                        <td><span class="badge status-${task.idTaskProgression}">${progressLabel}</span></td>
+                        <td>${task["compteur_de_temps_passe(mn)"] || 0} min</td>                        
+                        
+                        <td><div class="actions-group">${linksHtml}</div></td> 
+                        <td><div class="actions-group">${filesHtml}</div></td>
+                        
+                        <td>${dateFormatted}</td>
+                        <td><div class="actions-group">${statusButtons}</div></td>
+                        </tr>
+                `;
+            });
+            
+            tbody.insertAdjacentHTML("beforeend", htmlContent);
+            generateSubtasksTable(filteredTasks);
+        }
+        
+        function generateSubtasksTable(tasks) {
+            const subtasksTbody = document.getElementById('subtasksTableBody');
+            subtasksTbody.innerHTML = '';
+            let allSubtasks = [];
+            const storedSubtasks = localStorage.getItem("subtasksData");
+            if (storedSubtasks) allSubtasks = JSON.parse(storedSubtasks);
+            
+            let subtasksHtml = '';
+            let subtasksCount = 0;
+            const taskIds = tasks.map(t => t.id);
+            const filteredSubtasks = allSubtasks.filter(st => taskIds.includes(st.taskId));
+            
+            filteredSubtasks.forEach(subtask => {
+                subtasksCount++;
+                const parentTask = tasks.find(t => t.id === subtask.taskId);
+                const taskLibelle = parentTask ? parentTask.libelle : 'Tâche inconnue';
+                subtasksHtml += `<tr><td><strong>${taskLibelle}</strong></td><td>${subtask.subTaskLibelle}</td><td class="cell-description">${subtask.subTaskDescription || 'Aucune description'}</td></tr>`;
+            });
+            
+            if (subtasksCount === 0) subtasksHtml = `<tr><td colspan="3" class="empty-state"><div class="empty-state__icon">📝</div><p>Aucune sous-tâche enregistrée</p></td></tr>`;
+            subtasksTbody.insertAdjacentHTML("beforeend", subtasksHtml);
+        }
+        
+        function updateTaskStatus(taskId, newStatusId) {
+            let storedTasks = localStorage.getItem("tasksData");
+            if (!storedTasks) return;
+            tasksList = JSON.parse(storedTasks);
+            const taskToUpdate = tasksList.find(task => task.id == taskId);
+            if (!taskToUpdate) return;
+            taskToUpdate.idTaskProgression = newStatusId;
+            taskToUpdate.date_de_modification = new Date().toISOString();
+            if (newStatusId == "6") taskToUpdate.date_de_completion = new Date().toISOString();
+            localStorage.setItem("tasksData", JSON.stringify(tasksList));
+            
+            if (newStatusId == "7") {
+                generateTasksTable(currentFilter);
+                alert(`✅ Tâche #${taskId} archivée avec succès !`);
+            } else {
+                updateTaskRow(taskId);
+                const statusObj = taskProgressionList.find(s => s.idTaskProgression == newStatusId);
+                const statusLabel = statusObj ? statusObj.taskProgressionStatus : newStatusId;
+                alert(`✅ Statut de la tâche #${taskId} changé vers "${statusLabel}"`);
+            }
+        }
+        
+        function updateTaskRow(taskId) {
+            const task = tasksList.find(t => t.id == taskId);
+            if (!task) return;
+            const row = document.querySelector(`tr[data-task-id="${taskId}"]`);
+            if (!row) return;
+            const statusObj = taskProgressionList.find(s => s.idTaskProgression == task.idTaskProgression);
+            const statusLabel = statusObj ? statusObj.taskProgressionStatus : 'Non défini';
+            
+            // L'index du Statut est 7 (inchangé)
+            row.cells[7].innerHTML = `<span class="badge status-${task.idTaskProgression}">${statusLabel}</span>`;
+            
+            let statusButtons = '';
+            taskProgressionList.forEach(status => {
+                const isActive = status.idTaskProgression == task.idTaskProgression;
+                const activeClass = isActive ? `active-${status.idTaskProgression}` : '';
+                const disabled = isActive ? 'disabled' : '';
+                statusButtons += `<button class="btn-icon ${activeClass}" data-task-id="${task.id}" data-status-id="${status.idTaskProgression}" onclick="updateTaskStatus(${task.id}, '${status.idTaskProgression}')" ${disabled} title="${status.taskProgressionStatus}">${getStatusIcon(status.idTaskProgression)}</button>`;
+            });
+            
+            // CORRECTION CRITIQUE : L'index de la colonne Actions est maintenant 12
+            // Colonnes : 0..8 (Temps), 9 (Liens), 10 (Fichiers), 11 (Date), 12 (Actions)
+            row.cells[12].innerHTML = `<div class="actions-group">${statusButtons}</div>`;
+        }
+        
+        function filterTasks(filter) {
+            currentFilter = filter;
+            document.querySelectorAll('.btn-filter').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            generateTasksTable(filter);
+        }
+    </script>
+</head>
+<body>
+    <main class="app-container">
+        <header>
+            <h1 class="page-title">📋 Récapitulatif des Tâches</h1>
+            
+            <nav class="toolbar">
+                <div class="toolbar__counter" id="taskCount">0 tâche(s) enregistrée(s)</div>
+                
+                <div class="toolbar__filters">
+                    <button class="btn-filter active" onclick="filterTasks('all')">Toutes</button>
+                    <button class="btn-filter" onclick="filterTasks('6')">Terminées</button>
+                    <button class="btn-filter" onclick="filterTasks('7')">Archivées</button>
+                </div>
+                
+                <div class="toolbar__actions">
+                    <a href="../3B_Enregistrement_localStorage/Form-ToDoList-3B.html" class="btn-primary">+ Nouvelle tâche</a>
+                    <a href="./../../index.html" class="btn-primary">Vers l'index</a>
+                </div>
+            </nav>
+        </header>
+
+        <article>
+            <h2 class="section-title">Vue des tableaux</h2>
+            <div class="table-wrapper">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Titre</th>
+                            <th>Description</th>
+                            <th>Assigné à</th>
+                            <th>Sujet</th>
+                            <th>Niveau</th>
+                            <th>Difficulté</th>
+                            <th>Priorité</th>
+                            <th>Statut</th>
+                            <th>Temps (min)</th>
+                            <th>Liens</th>
+                            <th>Fichier</th>
+                            <th>Date création</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tasksTableBody">
+                        </tbody>
+                </table>
+            </div>
+            
+            <aside class="subtasks-section">
+                <h2 class="section-title">📋 Sous-tâches</h2>
+                <div class="table-wrapper">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Tâche principale</th>
+                                <th>Sous-tâche</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody id="subtasksTableBody">
+                            </tbody>
+                    </table>
+                </div>
+            </aside>
+        </article>
+    </main>
+</body>
+</html>
